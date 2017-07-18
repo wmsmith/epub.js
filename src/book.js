@@ -933,8 +933,11 @@ EPUBJS.Book.prototype.nextChapter = function(defer) {
     return defer.promise;
 };
 
-EPUBJS.Book.prototype.prevChapter = function(defer) {
+EPUBJS.Book.prototype.prevChapter = function(defer, goToEnd) {
     var defer = defer || new RSVP.defer();
+    if (typeof(goToEnd) === "undefined") {
+        goToEnd = true;
+    }
 
     if (this.spinePos > 0) {
 		var prev = this.spinePos - 1;
@@ -942,7 +945,7 @@ EPUBJS.Book.prototype.prevChapter = function(defer) {
 			prev--;
 		}
 		if (prev >= 0) {
-			return this.displayChapter(prev, true, defer);
+			return this.displayChapter(prev, goToEnd, defer);
 		}
     }
 
