@@ -290,13 +290,16 @@ EPUBJS.core.addScripts = function(srcArr, callback, target) {
 	EPUBJS.core.addScript(srcArr[curr], cb, target);
 };
 
-EPUBJS.core.addCss = function(src, callback, target) {
+EPUBJS.core.addCss = function(src, callback, target, dataAttributes) {
 	var s, r;
 	r = false;
 	s = document.createElement('link');
 	s.type = 'text/css';
 	s.rel = "stylesheet";
 	s.href = src;
+	for (var attributeKey in dataAttributes) {
+		s.dataset[attributeKey] = dataAttributes[attributeKey];
+	}
 	s.onload = s.onreadystatechange = function() {
 		if ( !r && (!this.readyState || this.readyState == 'complete') ) {
 			r = true;
